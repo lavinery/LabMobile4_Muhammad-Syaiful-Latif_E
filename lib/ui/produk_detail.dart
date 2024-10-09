@@ -75,15 +75,16 @@ class _ProdukDetailState extends State<ProdukDetail> {
     AlertDialog alertDialog = AlertDialog(
       content: const Text("Yakin ingin menghapus data ini?"),
       actions: [
-        //tombol hapus
+//tombol hapus
         OutlinedButton(
           child: const Text("Ya"),
           onPressed: () {
-            ProdukBloc.deleteProduk(id: int.parse(widget.produk!.id!)).then(
-                (value) => {
-                      Navigator.of(context).push(MaterialPageRoute(
-                          builder: (context) => const ProdukPage()))
-                    }, onError: (error) {
+            ProdukBloc.deleteProduk(id: int.parse(widget.produk!.id! as String))
+                .then(
+                    (value) => {
+                          Navigator.of(context).push(MaterialPageRoute(
+                              builder: (context) => const ProdukPage()))
+                        }, onError: (error) {
               showDialog(
                   context: context,
                   builder: (BuildContext context) => const WarningDialog(
@@ -92,7 +93,7 @@ class _ProdukDetailState extends State<ProdukDetail> {
             });
           },
         ),
-        //tombol batal
+//tombol batal
         OutlinedButton(
           child: const Text("Batal"),
           onPressed: () => Navigator.pop(context),

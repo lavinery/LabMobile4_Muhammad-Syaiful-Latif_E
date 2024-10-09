@@ -17,14 +17,15 @@ class WarningDialog extends StatelessWidget {
   Widget build(BuildContext context) {
     return Dialog(
       shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(Consts.padding)),
+        borderRadius: BorderRadius.circular(Consts.padding),
+      ),
       elevation: 0.0,
       backgroundColor: Colors.transparent,
       child: dialogContent(context),
     );
   }
 
-  dialogContent(BuildContext context) {
+  Widget dialogContent(BuildContext context) {
     return Container(
       padding: const EdgeInsets.only(
         top: Consts.padding,
@@ -51,7 +52,10 @@ class WarningDialog extends StatelessWidget {
           const Text(
             "GAGAL",
             style: TextStyle(
-                fontSize: 24.0, fontWeight: FontWeight.w700, color: Colors.red),
+              fontSize: 24.0,
+              fontWeight: FontWeight.w700,
+              color: Colors.red,
+            ),
           ),
           const SizedBox(height: 16.0),
           Text(
@@ -70,7 +74,7 @@ class WarningDialog extends StatelessWidget {
               },
               child: const Text("OK"),
             ),
-          )
+          ),
         ],
       ),
     );

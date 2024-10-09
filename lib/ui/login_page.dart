@@ -4,6 +4,7 @@ import 'package:toko_kita/helpers/user_info.dart';
 import 'package:toko_kita/ui/produk_page.dart';
 import 'package:toko_kita/ui/registrasi_page.dart';
 import 'package:toko_kita/widget/warning_dialog.dart';
+import 'package:toko_kita/widget/success_dialog.dart';
 
 class LoginPage extends StatefulWidget {
   const LoginPage({Key? key}) : super(key: key);
@@ -102,8 +103,19 @@ class _LoginPageState extends State<LoginPage> {
       if (value.code == 200) {
         await UserInfo().setToken(value.token.toString());
         await UserInfo().setUserID(value.userID.toString());
-        Navigator.pushReplacement(context,
-            MaterialPageRoute(builder: (context) => const ProdukPage()));
+        showDialog(
+          context: context,
+          barrierDismissible: false,
+          builder: (BuildContext context) => SuccessDialog(
+            description: "Anda berhasil login.",
+            okClick: () {
+              Navigator.pushReplacement(
+                context,
+                MaterialPageRoute(builder: (context) => const ProdukPage()),
+              );
+            },
+          ),
+        );
       } else {
         showDialog(
             context: context,

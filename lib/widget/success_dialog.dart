@@ -9,6 +9,7 @@ class Consts {
 class SuccessDialog extends StatelessWidget {
   final String? description;
   final VoidCallback? okClick;
+
   const SuccessDialog({Key? key, this.description, this.okClick})
       : super(key: key);
 
@@ -16,14 +17,15 @@ class SuccessDialog extends StatelessWidget {
   Widget build(BuildContext context) {
     return Dialog(
       shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(Consts.padding)),
+        borderRadius: BorderRadius.circular(Consts.padding),
+      ),
       elevation: 0.0,
       backgroundColor: Colors.transparent,
       child: dialogContent(context),
     );
   }
 
-  dialogContent(BuildContext context) {
+  Widget dialogContent(BuildContext context) {
     return Container(
       padding: const EdgeInsets.only(
         top: Consts.padding,
@@ -50,9 +52,10 @@ class SuccessDialog extends StatelessWidget {
           const Text(
             "SUKSES",
             style: TextStyle(
-                fontSize: 24.0,
-                fontWeight: FontWeight.w700,
-                color: Colors.green),
+              fontSize: 24.0,
+              fontWeight: FontWeight.w700,
+              color: Colors.green,
+            ),
           ),
           const SizedBox(height: 16.0),
           Text(
@@ -72,7 +75,7 @@ class SuccessDialog extends StatelessWidget {
               },
               child: const Text("OK"),
             ),
-          )
+          ),
         ],
       ),
     );
