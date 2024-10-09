@@ -2,7 +2,7 @@ class Login {
   int? code;
   bool? status;
   String? token;
-  int? userID;
+  String? userID;
   String? userEmail;
 
   Login({

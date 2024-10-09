@@ -1,9 +1,13 @@
 import 'package:flutter/material.dart';
+import 'package:toko_kita/bloc/produk_bloc.dart';
 import 'package:toko_kita/model/produk.dart';
 import 'package:toko_kita/ui/produk_form.dart';
+import 'package:toko_kita/ui/produk_page.dart';
+import 'package:toko_kita/widget/warning_dialog.dart';
 
+// ignore: must_be_immutable
 class ProdukDetail extends StatefulWidget {
-  final Produk? produk;
+  Produk? produk;
 
   ProdukDetail({Key? key, this.produk}) : super(key: key);
 
@@ -16,7 +20,7 @@ class _ProdukDetailState extends State<ProdukDetail> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Detail Produk Syaiful'),
+        title: const Text('Detail Produk'),
       ),
       body: Center(
         child: Column(
@@ -33,19 +37,18 @@ class _ProdukDetailState extends State<ProdukDetail> {
               "Harga : Rp. ${widget.produk!.hargaProduk.toString()}",
               style: const TextStyle(fontSize: 18.0),
             ),
-            _tombolHapusEdit(),
+            _tombolHapusEdit()
           ],
         ),
       ),
     );
   }
 
-  // Widget for Edit and Delete buttons
   Widget _tombolHapusEdit() {
     return Row(
       mainAxisSize: MainAxisSize.min,
       children: [
-        // Edit Button
+        // Tombol Edit
         OutlinedButton(
           child: const Text("EDIT"),
           onPressed: () {
@@ -59,8 +62,7 @@ class _ProdukDetailState extends State<ProdukDetail> {
             );
           },
         ),
-        const SizedBox(width: 10), // Spacer between buttons
-        // Delete Button
+        // Tombol Hapus
         OutlinedButton(
           child: const Text("DELETE"),
           onPressed: () => confirmHapus(),
@@ -69,30 +71,35 @@ class _ProdukDetailState extends State<ProdukDetail> {
     );
   }
 
-  // Function to confirm deletion
   void confirmHapus() {
     AlertDialog alertDialog = AlertDialog(
       content: const Text("Yakin ingin menghapus data ini?"),
       actions: [
-        // Delete Confirmation
+        //tombol hapus
         OutlinedButton(
           child: const Text("Ya"),
           onPressed: () {
-            // Logic to handle deletion
-            Navigator.pop(context);
+            ProdukBloc.deleteProduk(id: int.parse(widget.produk!.id!)).then(
+                (value) => {
+                      Navigator.of(context).push(MaterialPageRoute(
+                          builder: (context) => const ProdukPage()))
+                    }, onError: (error) {
+              showDialog(
+                  context: context,
+                  builder: (BuildContext context) => const WarningDialog(
+                        description: "Hapus gagal, silahkan coba lagi",
+                      ));
+            });
           },
         ),
-        // Cancel Button
+        //tombol batal
         OutlinedButton(
           child: const Text("Batal"),
           onPressed: () => Navigator.pop(context),
-        ),
+        )
       ],
     );
 
-    showDialog(
-      context: context,
-      builder: (context) => alertDialog,
-    );
+    showDialog(builder: (context) => alertDialog, context: context);
   }
 }
